@@ -34,3 +34,36 @@ class Tastes(Person):
 
     def practiceSport(self):
         print("I have well trained today!")
+
+class FavouriteNumbers(Person):
+    def __init__(self, firstName, lastName, age, numbers):
+        # numbers is a list of the person favourite numbers
+        Person.__init__(self, firstName, lastName, age)
+        self.numbers = numbers
+
+    def iLoveSatan(self):
+        total = 0
+        for number in self.numbers:
+            total += number
+        if total == 666:
+            print("SATAN GROS LOVE SUR TOI")
+        else:
+            print("Amen")
+
+    def iAmEgocentric(self):
+        if self.age in self.numbers:
+            print("JE JE JE MOI MOI MOI")
+        else:
+            print("Je suis la plus gentille ! Qui suis-je ?")
+
+    def sum(self):
+        total = 0
+        for number in self.numbers:
+            total += number
+        return total
+
+    def sumIsPositive(self):
+        if self.sum() >= 0:
+            return True
+        else:
+            return False

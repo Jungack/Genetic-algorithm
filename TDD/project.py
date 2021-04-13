@@ -21,7 +21,7 @@ class IDCard(Person):
         print("The person is now "+str(self.getHeight())+" cms tall.")
 
 class Tastes(Person):
-    def __init__(self, food, sport):
+    def __init__(self, firstName, lastName, age, food, sport):
         Person.__init__(self, firstName, lastName, age)
         self.food = food
         self.sport = sport

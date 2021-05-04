@@ -14,7 +14,7 @@ class Individual:
 
     def select_individuals(self):
         while True:
-            print("Bonjour")
+            print("Bonjour Jacques")
 
     def crossover_individuals(self, otherIndividual):
         while True:

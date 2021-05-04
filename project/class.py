@@ -8,6 +8,22 @@ class Individual:
         self.geneticCode = geneticCode
         self.fitness = fitness
 
+    def evaluate_fitness(self):
+        while True:
+            print("Bonjour")
+
+    def select_individuals(self):
+        while True:
+            print("Bonjour")
+
+    def crossover_individuals(self, otherIndividual):
+        while True:
+            print("Bonjour")
+
+    def mutate_individuals(self, otherIndividual):
+        while True:
+            print("Bonjour")
+
 class Population:
     def __init__(self, individuals, initialList):
         """

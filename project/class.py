@@ -16,9 +16,14 @@ class Individual:
         while True:
             print("Bonjour Jacques")
 
-    def crossover_individuals(self, otherIndividual):
-        while True:
-            print("Bonjour hhh")
+    def crossover_individuals(self, otherIndividual, crossoverPoint):
+        a = self.geneticCode
+        b = self.crossoverPoint
+        for i in range(crossoverPoint,len(a)):
+            a.pop(-1)
+        for i in range(0,crossoverPoint):
+            b.pop(0)
+        return a + b
 
     def mutate_individuals(self, otherIndividual):
         while True:

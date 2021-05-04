@@ -1,4 +1,29 @@
-class Individual:
+from numpy import * 
+
+class Population:
+    def __init__(self, individuals, initialList):
+        """
+        individuals is a list of individual objects
+        initialList is the list of relative numbers given at the beginning
+        """
+        self.individuals = individuals
+        self.initialList = initialList
+
+
+    def len_of_individual(self, individual):
+        res = 0
+        for i in range(len(self.initialList)):
+            res += individual.geneticCode[i]
+        return res
+
+    def select_individuals(self):
+        selected_individuals = []
+        for individual in self.individuals:
+            if sum_of_individual(individual) == 0:
+                selected_individuals += [individual]
+        return Population(selected_individuals, self.initialList)
+    
+class Individual(Population):
     def __init__(self, geneticCode, fitness):
         """
         geneticCode is a list of 0 and 1 linked to a specific list :
@@ -9,47 +34,17 @@ class Individual:
         self.fitness = fitness
 
     def evaluate_fitness(self):
-        while True:
-            print("Bonjour Florian")
+        return abs(vdot(initialList, geneticCode))
+        
 
     def select_individuals(self):
         while True:
-            print("Bonjour Jacques")
+            print("Bonjour")
 
     def crossover_individuals(self, otherIndividual):
         while True:
-            print("Bonjour hhh")
+            print("Bonjour")
 
     def mutate_individuals(self, otherIndividual):
         while True:
             print("Bonjour")
-
-class Population:
-    def __init__(self, individuals, initialList):
-        """
-        individuals is a list of individual objects
-        initialList is the list of relative numbers given at the début
-        """
-        self.individuals = individuals
-        self.initial_list = initialList
-
-
-    def len_of_individual(self, individual):
-        res = 0
-        for i in range(len(self.initialList)):
-            res += individual.geneticCode[i]
-        return res
-
-    def sum_of_individual(self, individual):
-        res = 0
-        for i in range(len(self.initialList)):
-            if individual.geneticCode[i] == 1:
-                res += self.initialList[i]
-        return res
-
-    def select_individuals(self):
-        selected_individuals = []
-        for individual in self.individuals:
-            if sum_of_individual(individual) == 0:
-                selected_individuals += [individual]
-        return Population(selected_individuals, self.initialList)

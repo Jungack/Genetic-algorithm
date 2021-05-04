@@ -10,7 +10,7 @@ class Individual:
 
     def evaluate_fitness(self):
         while True:
-            print("Bonjour")
+            print("Bonjour Florian")
 
     def select_individuals(self):
         while True:

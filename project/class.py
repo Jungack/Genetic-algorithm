@@ -18,7 +18,7 @@ class Individual:
 
     def crossover_individuals(self, otherIndividual):
         while True:
-            print("Bonjour")
+            print("Bonjour hhh")
 
     def mutate_individuals(self, otherIndividual):
         while True:

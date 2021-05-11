@@ -22,24 +22,7 @@ class Population:
             if sum_of_individual(individual) == 0:
                 selected_individuals += [individual]
         return Population(selected_individuals, self.initialList)
-
-class Individual(Population):
-    def __init__(self, geneticCode, fitness):
-        """
-        geneticCode is a list of 0 and 1 linked to a specific list :
-        - if there is a 0 at position i, this means that the number list[i] is not in the individual
-        - if there is a 1 at position i, this means that the number list[i] is in the individual
-        """
-        self.geneticCode = geneticCode
-        self.fitness = fitness
-
-    def evaluate_fitness(self):
-        return abs(vdot(initialList, geneticCode))
-
-
-    def select_individuals(self):
-        while True:
-            print("Bonjour")
+    
 
     def crossover_individuals(self, otherIndividual, crossoverPoint):
         a = self.geneticCode
@@ -53,3 +36,18 @@ class Individual(Population):
     def mutate_individuals(self, otherIndividual):
         while True:
             print("Bonjour")
+
+
+class Individual(Population):
+    def __init__(self, geneticCode, fitness):
+        """
+        geneticCode is a list of 0 and 1 linked to a specific list :
+        - if there is a 0 at position i, this means that the number list[i] is not in the individual
+        - if there is a 1 at position i, this means that the number list[i] is in the individual
+        """
+        self.geneticCode = geneticCode
+        self.fitness = evaluate_fitness()
+
+    def evaluate_fitness(self):
+        return abs(vdot(initialList, geneticCode))
+

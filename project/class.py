@@ -1,4 +1,4 @@
-from numpy import *
+import numpy as np
 
 class Population:
     def __init__(self, individuals, initialList):
@@ -8,13 +8,10 @@ class Population:
         """
         self.individuals = individuals
         self.initialList = initialList
+        
+    def sort_individuals_by_fitness(self):
+        
 
-
-    def len_of_individual(self, individual):
-        res = 0
-        for i in range(len(self.initialList)):
-            res += individual.geneticCode[i]
-        return res
 
     def select_individuals(self):
         selected_individuals = []
@@ -47,7 +44,11 @@ class Individual(Population):
         """
         self.geneticCode = geneticCode
         self.fitness = evaluate_fitness()
+        
+        
+    def len_of_individual(self, individual):
+        return np.dot(np.ones(len(initialList)), individual)
 
     def evaluate_fitness(self):
-        return abs(vdot(initialList, geneticCode))
+        return np.abs(np.dot(initialList, geneticCode))
 

@@ -1,4 +1,5 @@
 from numpy import *
+import random
 
 class Population:
     def __init__(self, individuals, initialList):
@@ -9,33 +10,23 @@ class Population:
         self.individuals = individuals
         self.initialList = initialList
 
-
-    def len_of_individual(self, individual):
-        res = 0
-        for i in range(len(self.initialList)):
-            res += individual.geneticCode[i]
+    def select_individuals(self):
+        res = sorted(self.individuals, key = lambda x: x.fitness)
         return res
 
-    def select_individuals(self):
-        selected_individuals = []
-        for individual in self.individuals:
-            if sum_of_individual(individual) == 0:
-                selected_individuals += [individual]
-        return Population(selected_individuals, self.initialList)
-    
-
-    def crossover_individuals(self, otherIndividual, crossoverPoint):
-        a = self.geneticCode
-        b = self.crossoverPoint
+    def crossover_individuals(self, firstIndividual, otherIndividual, crossoverPoint):
+        a = firstIndividual.geneticCode
+        b = otherIndividual.geneticCode
         for i in range(crossoverPoint,len(a)):
             a.pop(-1)
         for i in range(0,crossoverPoint):
             b.pop(0)
         return a + b
 
-    def mutate_individuals(self, otherIndividual):
-        while True:
-            print("Bonjour")
+    def mutate_individuals(self, individual):
+        mutatePoint = random.randint(0,len(individual))
+        individual[mutatePoint] = random.randint(0,2)
+        return individual
 
 
 class Individual(Population):
@@ -46,7 +37,7 @@ class Individual(Population):
         - if there is a 1 at position i, this means that the number list[i] is in the individual
         """
         self.geneticCode = geneticCode
-        self.fitness = evaluate_fitness()
+        self.fitness = fitness
 
     def evaluate_fitness(self):
         return abs(vdot(initialList, geneticCode))

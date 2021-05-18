@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import numpy as np
-=======
-from numpy import *
 import random
->>>>>>> 9da9992e73bd849c44682480e189b46cd75f86c9
 
 class Population:
     def __init__(self, individuals, initialList):
@@ -15,30 +11,25 @@ class Population:
         self.initialList = initialList
         
     def sort_individuals_by_fitness(self):
+        sorted(self.individuals, key = lambda x: x.fitness)
         
 
-<<<<<<< HEAD
-
     def select_individuals(self):
-        selected_individuals = []
-        for individual in self.individuals:
-            if sum_of_individual(individual) == 0:
-                selected_individuals += [individual]
-        return Population(selected_individuals, self.initialList)
+        self.individuals = [Individual(individuals[i], 0) for ]
     
 
     def crossover_individuals(self, otherIndividual, crossoverPoint):
         a = self.geneticCode
         b = self.crossoverPoint
-=======
+
     def select_individuals(self):
         res = sorted(self.individuals, key = lambda x: x.fitness)
         return res
 
     def crossover_individuals(self, firstIndividual, otherIndividual, crossoverPoint):
+        
         a = firstIndividual.geneticCode
         b = otherIndividual.geneticCode
->>>>>>> 9da9992e73bd849c44682480e189b46cd75f86c9
         for i in range(crossoverPoint,len(a)):
             a.pop(-1)
         for i in range(0,crossoverPoint):
@@ -59,16 +50,15 @@ class Individual(Population):
         - if there is a 1 at position i, this means that the number list[i] is in the individual
         """
         self.geneticCode = geneticCode
-<<<<<<< HEAD
+        
+    def evaluate_fitness(self):
+        return np.abs(np.dot(initialList, geneticCode))        
+        
         self.fitness = evaluate_fitness()
         
         
     def len_of_individual(self, individual):
         return np.dot(np.ones(len(initialList)), individual)
-=======
-        self.fitness = fitness
->>>>>>> 9da9992e73bd849c44682480e189b46cd75f86c9
 
-    def evaluate_fitness(self):
-        return np.abs(np.dot(initialList, geneticCode))
+
 

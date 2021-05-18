@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import numpy as np
-=======
-from numpy import *
 import random
->>>>>>> 9da9992e73bd849c44682480e189b46cd75f86c9
 
 class Population:
     def __init__(self, individuals, initialList):
@@ -13,42 +9,56 @@ class Population:
         """
         self.individuals = individuals
         self.initialList = initialList
-        
-    def sort_individuals_by_fitness(self):
-        
+        self.l = len(initialList)
 
-<<<<<<< HEAD
 
-    def select_individuals(self):
-        selected_individuals = []
-        for individual in self.individuals:
-            if sum_of_individual(individual) == 0:
-                selected_individuals += [individual]
-        return Population(selected_individuals, self.initialList)
-    
+    """
+    STEP 2 :
+    Crossovers
+    """
 
-    def crossover_individuals(self, otherIndividual, crossoverPoint):
-        a = self.geneticCode
-        b = self.crossoverPoint
-=======
-    def select_individuals(self):
-        res = sorted(self.individuals, key = lambda x: x.fitness)
-        return res
-
-    def crossover_individuals(self, firstIndividual, otherIndividual, crossoverPoint):
+    def crossoverIndividuals(self, firstIndividual, otherIndividual, crossoverPoint):
         a = firstIndividual.geneticCode
         b = otherIndividual.geneticCode
->>>>>>> 9da9992e73bd849c44682480e189b46cd75f86c9
-        for i in range(crossoverPoint,len(a)):
+        for i in range(crossoverPoint,self.l):
             a.pop(-1)
-        for i in range(0,crossoverPoint):
+        for i in range(crossoverPoint):
             b.pop(0)
         return a + b
 
-    def mutate_individuals(self, individual):
-        mutatePoint = random.randint(0,len(individual))
-        individual[mutatePoint] = random.randint(0,2)
-        return individual
+    def crossoverOfSelectedIndividuals(self, individual1, individual2):
+        newIndividual1 = self.crossoverIndividuals(individual1, individual2, randint(0,self.l))
+        newIndividual2 = self.crossoverIndividuals(individual2, individual1, randint(0,self.l))
+        return [newIndividual1, newIndividual2]
+
+
+    """
+    STEP 3 :
+    Mutations
+    """
+
+    def mutateIndividuals(self, individual):
+        for i in range(self.l):
+            if random.randint(0,self.l) == 0:
+                individual.geneticCode[i] = -individual.geneticCode[i] + 1
+
+
+    """
+    STEP 4 :
+    Elitism
+    """
+
+    def sortIndividualsByFitness(self, population):
+        return sorted(population.individuals, key = lambda x: x.fitness)
+
+    def createNewPopulationWithElitism(self, newIndividuals):
+        pourcentageOfNewIndividuals = 0.9
+        numberOfNewIndividuals = round(pourcentageOfNewIndividuals * self.l)
+        numberOfOlfIndividuals = self.l - numberOfNewIndividuals
+        newIndividuals = self.sortIndividualByFitness(newPopulation)[:numberOfNewIndividuals]
+        oldIndividuals = self.sortIndividualByFitness(self.individuals)[:numberOfOldIndividuals]
+        return oldIndividuals + newIndividuals
+
 
 
 class Individual(Population):
@@ -59,20 +69,10 @@ class Individual(Population):
         - if there is a 1 at position i, this means that the number list[i] is in the individual
         """
         self.geneticCode = geneticCode
-<<<<<<< HEAD
-        self.fitness = evaluate_fitness()
-        
-        
-    def len_of_individual(self, individual):
-        return np.dot(np.ones(len(initialList)), individual)
-=======
         self.fitness = fitness
->>>>>>> 9da9992e73bd849c44682480e189b46cd75f86c9
 
-    def evaluate_fitness(self):
-<<<<<<< HEAD
-        return abs(vdot(initialList, geneticCode))
-=======
+    def evaluateFitness(self):
         return np.abs(np.dot(initialList, geneticCode))
 
->>>>>>> 5c0aa99698d5b98ad1bd36d0b2d0f4fd99e2bc3f
+    def lenOfIndividual(self, individual):
+        return np.dot(np.ones(len(initialList)), individual)

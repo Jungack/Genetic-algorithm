@@ -79,6 +79,24 @@ class Population:
         return oldIndividuals + newIndividuals
 
 
+    """
+    STEP 5 :
+    UPDATE THE BEST ANSWER
+    """
+    def updateBestAnswer(self, answer):
+        return 0
+
+    """
+    SUM UP
+    """
+    def main(self):
+        return True
+        """
+        STEP 1 TO BE DONE
+        """
+
+
+
 
 class Individual(Population):
     def __init__(self, geneticCode, fitness):
@@ -102,6 +120,9 @@ class Individual(Population):
 >>>>>>> a14b7fac1226feed329c8981b60f25cdefe4e628
 
     def evaluateFitness(self):
+        return np.abs(np.dot(initialList, geneticCode))
+
+    def sumOfList(self):
         return np.abs(np.dot(initialList, geneticCode))
 
     def lenOfIndividual(self, individual):

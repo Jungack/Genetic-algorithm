@@ -41,4 +41,3 @@ class Individual(Population):
 
     def evaluate_fitness(self):
         return abs(vdot(initialList, geneticCode))
-

@@ -1,5 +1,5 @@
 import numpy as np
-import random
+import random as rd
 
 class Population:
     def __init__(self, individuals, initialList):
@@ -10,21 +10,18 @@ class Population:
         self.individuals = individuals
         self.initialList = initialList
         
-    def sort_individuals_by_fitness(self):
-        sorted(self.individuals, key = lambda x: x.fitness)
+    def generate_genetic_code()
         
-
-    def select_individuals(self):
-        self.individuals = [Individual(individuals[i], 0) for ]
+    def sort_individuals_by_fitness(self):
+        return sorted(self.individuals, key = lambda x: x.fitness)
     
 
-    def crossover_individuals(self, otherIndividual, crossoverPoint):
-        a = self.geneticCode
-        b = self.crossoverPoint
-
-    def select_individuals(self):
-        res = sorted(self.individuals, key = lambda x: x.fitness)
-        return res
+    def select_two_individuals_by_tournament(self):
+        selected_individuals = rd.choices(self.individuals, k = floor(0.1*len(initialList)))
+        weights = [100/sum(selected_individuals[i].fitness/selected_individuals[j].fitness) for i in len(selected_individuals) for j in len(selected_individuals)]
+        
+            
+    
 
     def crossover_individuals(self, firstIndividual, otherIndividual, crossoverPoint):
         
@@ -50,15 +47,14 @@ class Individual(Population):
         - if there is a 1 at position i, this means that the number list[i] is in the individual
         """
         self.geneticCode = geneticCode
+        self.fitness = fitness
         
     def evaluate_fitness(self):
-        return np.abs(np.dot(initialList, geneticCode))        
+        self.fitness = np.abs(np.dot(initialList, geneticCode))        
+    
         
-        self.fitness = evaluate_fitness()
-        
-        
-    def len_of_individual(self, individual):
-        return np.dot(np.ones(len(initialList)), individual)
+    def len_of_individual(self):
+        return np.dot(np.ones(len(initialList)), self.geneticCode)
 
 
 

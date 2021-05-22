@@ -26,7 +26,7 @@ class Population:
         for i in range(self.nbOfIndividuals):
             temp = []
             for j in range(self.l):
-                temp += [rd.randint(0,2)]
+                temp += [rd.randint(0,1)]
             res += [Individual(temp, self.initialList)]
         self.individuals = res
 
@@ -45,7 +45,7 @@ class Population:
 
     def lenOfIndividual(self, individual):
         return np.dot(np.ones(self.l), individual.geneticCode)
-    
+
 
 
     """
@@ -68,11 +68,7 @@ class Population:
     def crossoverIndividuals(self, firstIndividual, otherIndividual, crossoverPoint):
         a = firstIndividual.geneticCode
         b = otherIndividual.geneticCode
-        for i in range(crossoverPoint,self.l):
-            a.pop(-1)
-        for i in range(crossoverPoint):
-            b.pop(0)
-        return a + b
+        return Individual(a[:crossoverPoint] + b[crossoverPoint:], self.initialList)
 
 
     def crossoverOfSelectedIndividuals(self, individualsToCross):
@@ -90,7 +86,7 @@ class Population:
 
     def mutateIndividuals(self, individual):
         for i in range(self.l):
-            if rd.randint(0,self.l) == 0:
+            if rd.randint(0,self.l - 1) == 0:
                 individual.geneticCode[i] = -individual.geneticCode[i] + 1
 
 
@@ -104,8 +100,8 @@ class Population:
 
     def createNewPopulationWithElitism(self, newIndividuals):
         pourcentageOfNewIndividuals = 0.9
-        numberOfNewIndividuals = round(pourcentageOfNewIndividuals * self.l)
-        numberOfOldIndividuals = self.l - numberOfNewIndividuals
+        numberOfNewIndividuals = round(pourcentageOfNewIndividuals * self.nbOfIndividuals)
+        numberOfOldIndividuals = self.nbOfIndividuals - numberOfNewIndividuals
         newIndividuals = self.sortIndividualsByFitness(newIndividuals)[:numberOfNewIndividuals]
         oldIndividuals = self.individuals[:numberOfOldIndividuals] # The individuals here will already be sorted
         self.individuals = self.sortIndividualsByFitness(oldIndividuals + newIndividuals)
@@ -121,7 +117,7 @@ class Population:
         self.individuals here is sorted by fitness to make considering the lenght of each individuals faster.
         """
         i = 0
-        while self.individuals[i].fitness == 0:
+        while self.individuals[i].fitness == 0 & i < self.nbOfIndividuals:
             if self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer):
                 answer = self.individuals[i]
             i += 1
@@ -140,7 +136,7 @@ class Population:
             for j in range(self.nbOfIndividuals // 2):
                 tournamentSelectedIndividuals += self.crossoverOfSelectedIndividuals(self.selectTwoIndividualsByTournament())
             for individual in tournamentSelectedIndividuals:
-                mutateIndividuals(individual)
+                self.mutateIndividuals(individual)
             self.setFitnessForAllIndividuals(tournamentSelectedIndividuals)
             self.createNewPopulationWithElitism(tournamentSelectedIndividuals)
             self.updateBestAnswer(answer)

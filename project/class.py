@@ -2,19 +2,43 @@ import numpy as np
 import random as rd
 
 class Population:
-    def __init__(self, individuals, initialList):
+    def __init__(self, initialList):
         """
         individuals is a list of individual objects
         initialList is the list of relative numbers given at the beginning
         """
-        self.individuals = individuals
         self.initialList = initialList
+        self.individuals = self.generateIndividuals()
         self.l = len(initialList)
 
-    def generateGeneticCode()
+
+    """
+    BASIC METHODS
+    """
+
+    def generateIndividuals(self):
+        return 0
 
     def sortIndividualsByFitness(self):
         return sorted(self.individuals, key = lambda x: x.fitness)
+
+    def evaluateFitness(self, individual):
+        return np.abs(np.dot(self.initialList, individual.geneticCode))
+
+    def setFitness(self, individual):
+        individual.fitness = self.evaluateFitness(individual)
+
+    def sumOfList(self, individual):
+        return np.abs(np.dot(self.initialList, individual.geneticCode))
+
+    def lenOfIndividual(self, individual):
+        return np.dot(np.ones(self.l), individual.geneticCode)
+
+
+    """
+    STEP 1:
+    Tournament
+    """
 
     def selectTwoIndividualsByTournament(self):
         selected_individuals = rd.choices(self.individuals, k = floor(0.1*len(initialList)))
@@ -67,7 +91,7 @@ class Population:
         numberOfOlfIndividuals = self.l - numberOfNewIndividuals
         newIndividuals = self.sortIndividualByFitness(newPopulation)[:numberOfNewIndividuals]
         oldIndividuals = self.sortIndividualByFitness(self.individuals)[:numberOfOldIndividuals]
-        return oldIndividuals + newIndividuals
+        self.individuals = self.sortIndividualsByFitness(oldIndividuals + newIndividuals)
 
 
     """
@@ -75,7 +99,11 @@ class Population:
     UPDATE THE BEST ANSWER
     """
     def updateBestAnswer(self, answer):
-        return 0
+        i = 0
+        while self.individuals[i].sumOfList() == 0:
+  #          if
+            i += 1
+
 
     """
     SUM UP
@@ -90,20 +118,13 @@ class Population:
 
 
 class Individual(Population):
-    def __init__(self, geneticCode, fitness):
+    def __init__(self, geneticCode, initialList):
         """
         geneticCode is a list of 0 and 1 linked to a specific list :
         - if there is a 0 at position i, this means that the number list[i] is not in the individual
         - if there is a 1 at position i, this means that the number list[i] is in the individual
+        fitness is a number that evaluate if an individual is, or is almost an answer. The nearer to 0, the better. If equal to 0, then the sum of the extracted list associated to the individual is 0.
         """
         self.geneticCode = geneticCode
-        self.fitness = fitness
-
-    def evaluateFitness(self):
-        return np.abs(np.dot(initialList, geneticCode))
-
-    def sumOfList(self):
-        return np.abs(np.dot(initialList, geneticCode))
-
-    def lenOfIndividual(self, individual):
-        return np.dot(np.ones(len(initialList)), individual)
+        Population.initialList = initialList
+        self.fitness = 0

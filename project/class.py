@@ -45,6 +45,7 @@ class Population:
 
     def lenOfIndividual(self, individual):
         return np.dot(np.ones(self.l), individual.geneticCode)
+    
 
 
     """
@@ -53,7 +54,7 @@ class Population:
     """
 
     def selectTwoIndividualsByTournament(self):
-        selected_individuals = rd.choices(self.individuals, k = np.floor(0.1*self.l))
+        selected_individuals = rd.sample(self.individuals, 20)
         finalTwoIndividuals = []
         for step in range(2):
             length = len(selected_individuals)
@@ -65,7 +66,6 @@ class Population:
                 pickANumber -= weights[index]/100
                 index+=1
             finalTwoIndividuals.append(selected_individuals[index])
-            del selected_individuals[index]
         return finalTwoIndividuals
 
 
@@ -83,13 +83,10 @@ class Population:
             b.pop(0)
         return a + b
 
-<<<<<<< HEAD
-    def crossoverOfSelectedIndividuals(self, individual1, individual2):
-=======
+
     def crossoverOfSelectedIndividuals(self, individualsToCross):
         individual1 = individualsToCross[0]
         individual2 = individualsToCross[1]
->>>>>>> 4b60d0b45b163af525715ee2cea4d2c98e107b97
         newIndividual1 = self.crossoverIndividuals(individual1, individual2, rd.randint(0,self.l))
         newIndividual2 = self.crossoverIndividuals(individual2, individual1, rd.randint(0,self.l))
         return [newIndividual1, newIndividual2]
@@ -117,7 +114,7 @@ class Population:
     def createNewPopulationWithElitism(self, newIndividuals):
         pourcentageOfNewIndividuals = 0.9
         numberOfNewIndividuals = round(pourcentageOfNewIndividuals * self.l)
-        numberOfOlfIndividuals = self.l - numberOfNewIndividuals
+        numberOfOldIndividuals = self.l - numberOfNewIndividuals
         newIndividuals = self.sortIndividualsByFitness(newIndividuals)[:numberOfNewIndividuals]
         oldIndividuals = self.individuals[:numberOfOldIndividuals] # The individuals here will already be sorted
         self.individuals = self.sortIndividualsByFitness(oldIndividuals + newIndividuals)

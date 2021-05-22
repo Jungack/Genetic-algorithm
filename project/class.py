@@ -55,8 +55,18 @@ class Population:
 
     def selectTwoIndividualsByTournament(self):
         selected_individuals = rd.sample(self.individuals, 20)
-        selected_individuals = self.sortIndividualsByFitness(selected_individuals)
-        finalTwoIndividuals = [selected_individuals[0], selected_individuals[1]]
+        finalTwoIndividuals = []
+        for step in range(2):
+            length = len(selected_individuals)
+            listOfFitness = [selected_individuals[i].fitness for i in range(length)] + np.ones(length)/100000
+            weights = [100/(listOfFitness[i]*sum(1/listOfFitness)) for i in range(length)]
+            index = 0
+            pickANumber = rd.random()
+            while ((pickANumber - weights[index]/100) > 0):
+                pickANumber -= weights[index]/100
+                index+=1
+            finalTwoIndividuals += [selected_individuals[index]]
+            del selected_individuals[index]
         return finalTwoIndividuals
 
 

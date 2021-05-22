@@ -14,7 +14,11 @@ class Population:
         self.nbOfIndividuals = 100
         self.l = len(initialList)
         self.individuals = 0 # useless to put It here since It will be defined with generateIndividuals method, but we want to keep a list of all the attributes of Population class
+<<<<<<< HEAD
         self.nbOfGenerations = 5000
+=======
+        self.nbOfGenerations = 1000
+>>>>>>> ee58f692c83407d9578842e1e8e3ec184784a61f
 
 
     """
@@ -30,9 +34,12 @@ class Population:
             res += [Individual(temp, self.initialList)]
         self.individuals = res
 
+<<<<<<< HEAD
     def evaluateFitness(self, individual):
         return np.abs(np.dot(self.initialList, individual.geneticCode)) +10*(1-self.lenOfIndividual(individual)/self.l)
 
+=======
+>>>>>>> ee58f692c83407d9578842e1e8e3ec184784a61f
     def setFitnessForOneIndividual(self, individual):
         individual.fitness = self.evaluateFitness(individual)
 
@@ -45,6 +52,14 @@ class Population:
 
     def lenOfIndividual(self, individual):
         return np.dot(np.ones(self.l), individual.geneticCode)
+
+    """
+    def evaluateFitness(self, individual):
+        return np.abs(np.dot(self.initialList, individual.geneticCode))
+    """
+
+    def evaluateFitness(self, individual):
+        return np.abs(np.dot(self.initialList, individual.geneticCode)) / self.lenOfIndividual(individual)
 
 
 
@@ -125,9 +140,18 @@ class Population:
         """
         By definition, the fitness is 0 when the sum of the sublist linked to an individual is 0. Since the fitness function does not necesarry consider the lenght of the list, we need to consider It there, only for the individuals with a sum of 0.
         self.individuals here is sorted by fitness to make considering the lenght of each individuals faster.
+        We define a best possible answer as the individual with the best fitness AND the longest lenght.
         """
+<<<<<<< HEAD
         if self.individuals[0].fitness < answer.fitness:
             answer = self.individuals[0]
+=======
+        i = 0
+        while (self.individuals[i].fitness <= answer.fitness) & (i < self.nbOfIndividuals):
+            if self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer):
+                answer = self.individuals[i]
+            i += 1
+>>>>>>> ee58f692c83407d9578842e1e8e3ec184784a61f
         return answer
 
 
@@ -147,11 +171,15 @@ class Population:
                 self.mutateIndividuals(individual)
             self.setFitnessForAllIndividuals(tournamentSelectedIndividuals)
             self.createNewPopulationWithElitism(tournamentSelectedIndividuals)
+<<<<<<< HEAD
             self.updateBestAnswer(answer)
             print(self.sumOfList(answer))
             print(self.lenOfIndividual((answer)))
             answer = self.updateBestAnswer(answer)
         print(answer.geneticCode)
+=======
+            answer = self.updateBestAnswer(answer)
+>>>>>>> ee58f692c83407d9578842e1e8e3ec184784a61f
         return answer
 
 

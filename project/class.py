@@ -9,25 +9,17 @@ class Population:
         """
         self.individuals = individuals
         self.initialList = initialList
-<<<<<<< HEAD
-        
-    def generate_genetic_code()
-        
-    def sort_individuals_by_fitness(self):
-        return sorted(self.individuals, key = lambda x: x.fitness)
-    
+        self.l = len(initialList)
 
-    def select_two_individuals_by_tournament(self):
+    def generateGeneticCode()
+
+    def sortIndividualsByFitness(self):
+        return sorted(self.individuals, key = lambda x: x.fitness)
+
+    def selectTwoIndividualsByTournament(self):
         selected_individuals = rd.choices(self.individuals, k = floor(0.1*len(initialList)))
         weights = [100/sum(selected_individuals[i].fitness/selected_individuals[j].fitness) for i in len(selected_individuals) for j in len(selected_individuals)]
-        
-            
-    
 
-    def crossover_individuals(self, firstIndividual, otherIndividual, crossoverPoint):
-        
-=======
-        self.l = len(initialList)
 
 
     """
@@ -36,7 +28,6 @@ class Population:
     """
 
     def crossoverIndividuals(self, firstIndividual, otherIndividual, crossoverPoint):
->>>>>>> a14b7fac1226feed329c8981b60f25cdefe4e628
         a = firstIndividual.geneticCode
         b = otherIndividual.geneticCode
         for i in range(crossoverPoint,self.l):
@@ -107,17 +98,6 @@ class Individual(Population):
         """
         self.geneticCode = geneticCode
         self.fitness = fitness
-<<<<<<< HEAD
-        
-    def evaluate_fitness(self):
-        self.fitness = np.abs(np.dot(initialList, geneticCode))        
-    
-        
-    def len_of_individual(self):
-        return np.dot(np.ones(len(initialList)), self.geneticCode)
-
-=======
->>>>>>> a14b7fac1226feed329c8981b60f25cdefe4e628
 
     def evaluateFitness(self):
         return np.abs(np.dot(initialList, geneticCode))

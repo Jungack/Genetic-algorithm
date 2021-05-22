@@ -14,7 +14,7 @@ class Population:
         self.nbOfIndividuals = 200
         self.l = len(initialList)
         self.individuals = 0 # useless to put It here since It will be defined with generateIndividuals method, but we want to keep a list of all the attributes of Population class
-        self.nbOfGenerations = 10000
+        self.nbOfGenerations = 10
 
 
     """
@@ -131,6 +131,7 @@ class Population:
             if self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer):
                 answer = self.individuals[i]
             i += 1
+        return answer
 
 
     """
@@ -149,7 +150,7 @@ class Population:
                 self.mutateIndividuals(individual)
             self.setFitnessForAllIndividuals(tournamentSelectedIndividuals)
             self.createNewPopulationWithElitism(tournamentSelectedIndividuals)
-            self.updateBestAnswer(answer)
+            answer = self.updateBestAnswer(answer)
         return answer
 
 

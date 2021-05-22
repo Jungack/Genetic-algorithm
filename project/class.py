@@ -47,10 +47,15 @@ class Population:
         length = len(selected_individuals)
         listOfFitness = np.array([selected_individuals[i].fitness for i in range(length))])
         weights = [100/(listOfFitness[i]*sum(1/listOfFitness)) for i in range(length)]
+        finalTwoIndividuals = []
         for step in range(2):
             index = 0
-            pickANumber = 
-
+            pickANumber = rd.random()
+            while ((pickANumber - weights[index]/100) > 0):
+                pickANumber -= weights[index]/100
+                index++
+            finalTwoIndividuals.append(selected_individuals[index])
+        return finalTwoIndividuals
 
 
     """
@@ -106,9 +111,6 @@ class Population:
     UPDATE THE BEST ANSWER
     """
     def updateBestAnswer(self, answer):
-<<<<<<< HEAD
-        return 0
-=======
         i = 0
         while self.individuals[i].sumOfList() == 0:
   #          if
@@ -116,13 +118,9 @@ class Population:
 
 
     """
->>>>>>> 42df614849fabb7c33faa1895d2288e9e3d480f0
     SUM UP
     """
     def main(self):
-
-    """
-        return True
         """
         STEP 1 TO BE DONE
         """

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import numpy as np
 import random as rd
 
@@ -17,8 +19,13 @@ class Population:
         return sorted(self.individuals, key = lambda x: x.fitness)
 
     def selectTwoIndividualsByTournament(self):
-        selected_individuals = rd.choices(self.individuals, k = floor(0.1*len(initialList)))
-        weights = [100/sum(selected_individuals[i].fitness/selected_individuals[j].fitness) for i in len(selected_individuals) for j in len(selected_individuals)]
+        selected_individuals = rd.choices(self.individuals, k = floor(0.1*self.l))
+        length = len(selected_individuals)
+        listOfFitness = np.array([selected_individuals[i].fitness for i in range(length))])
+        weights = [100/(listOfFitness[i]*sum(1/listOfFitness)) for i in range(length)]
+        for step in range(2):
+            index = 0
+            pickANumber = 
 
 
 
@@ -76,11 +83,11 @@ class Population:
     """
     def updateBestAnswer(self, answer):
         return 0
-
-    """
     SUM UP
     """
     def main(self):
+
+    """
         return True
         """
         STEP 1 TO BE DONE

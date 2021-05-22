@@ -14,7 +14,7 @@ class Population:
         self.nbOfIndividuals = 200
         self.l = len(initialList)
         self.individuals = 0 # useless to put It here since It will be defined with generateIndividuals method, but we want to keep a list of all the attributes of Population class
-        self.nbOfGenerations = 10
+        self.nbOfGenerations = 1000
 
 
     """
@@ -125,9 +125,10 @@ class Population:
         """
         By definition, the fitness is 0 when the sum of the sublist linked to an individual is 0. Since the fitness function does not necesarry consider the lenght of the list, we need to consider It there, only for the individuals with a sum of 0.
         self.individuals here is sorted by fitness to make considering the lenght of each individuals faster.
+        We define a best possible answer as the individual with the best fitness AND the longest lenght.
         """
         i = 0
-        while self.individuals[i].fitness == 0 & i < self.nbOfIndividuals:
+        while self.individuals[i].fitness <= answer.fitness & i < self.nbOfIndividuals:
             if self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer):
                 answer = self.individuals[i]
             i += 1

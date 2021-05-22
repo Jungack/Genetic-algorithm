@@ -43,9 +43,9 @@ class Population:
     """
 
     def selectTwoIndividualsByTournament(self):
-        selected_individuals = rd.choices(self.individuals, k = floor(0.1*self.l))
+        selected_individuals = rd.choices(self.individuals, k = np.floor(0.1*self.l))
         length = len(selected_individuals)
-        listOfFitness = np.array([selected_individuals[i].fitness for i in range(length))])
+        listOfFitness = np.array([selected_individuals[i].fitness for i in range(length)])
         weights = [100/(listOfFitness[i]*sum(1/listOfFitness)) for i in range(length)]
         finalTwoIndividuals = []
         for step in range(2):
@@ -53,7 +53,7 @@ class Population:
             pickANumber = rd.random()
             while ((pickANumber - weights[index]/100) > 0):
                 pickANumber -= weights[index]/100
-                index++
+                index+=1
             finalTwoIndividuals.append(selected_individuals[index])
         return finalTwoIndividuals
 
@@ -73,8 +73,8 @@ class Population:
         return a + b
 
     def crossoverOfSelectedIndividuals(self, individual1, individual2):
-        newIndividual1 = self.crossoverIndividuals(individual1, individual2, randint(0,self.l))
-        newIndividual2 = self.crossoverIndividuals(individual2, individual1, randint(0,self.l))
+        newIndividual1 = self.crossoverIndividuals(individual1, individual2, rd.randint(0,self.l))
+        newIndividual2 = self.crossoverIndividuals(individual2, individual1, rd.randint(0,self.l))
         return [newIndividual1, newIndividual2]
 
 
@@ -85,7 +85,7 @@ class Population:
 
     def mutateIndividuals(self, individual):
         for i in range(self.l):
-            if random.randint(0,self.l) == 0:
+            if rd.randint(0,self.l) == 0:
                 individual.geneticCode[i] = -individual.geneticCode[i] + 1
 
 

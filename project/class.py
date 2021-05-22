@@ -30,9 +30,6 @@ class Population:
             res += [Individual(temp, self.initialList)]
         self.individuals = res
 
-    def evaluateFitness(self, individual):
-        return np.abs(np.dot(self.initialList, individual.geneticCode))
-
     def setFitnessForOneIndividual(self, individual):
         individual.fitness = self.evaluateFitness(individual)
 
@@ -45,6 +42,14 @@ class Population:
 
     def lenOfIndividual(self, individual):
         return np.dot(np.ones(self.l), individual.geneticCode)
+
+    """
+    def evaluateFitness(self, individual):
+        return np.abs(np.dot(self.initialList, individual.geneticCode))
+    """
+
+    def evaluateFitness(self, individual):
+        return np.abs(np.dot(self.initialList, individual.geneticCode)) / self.lenOfIndividual(individual)
 
 
 
@@ -128,7 +133,7 @@ class Population:
         We define a best possible answer as the individual with the best fitness AND the longest lenght.
         """
         i = 0
-        while self.individuals[i].fitness <= answer.fitness & i < self.nbOfIndividuals:
+        while (self.individuals[i].fitness <= answer.fitness) & (i < self.nbOfIndividuals):
             if self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer):
                 answer = self.individuals[i]
             i += 1

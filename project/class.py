@@ -2,6 +2,7 @@
 
 import numpy as np
 import random as rd
+import math
 
 class Population:
     def __init__(self, initialList):
@@ -10,8 +11,10 @@ class Population:
         initialList is the list of relative numbers given at the beginning
         """
         self.initialList = initialList
-        self.individuals = self.generateIndividuals()
+        self.nbOfIndividuals = 200
         self.l = len(initialList)
+        self.individuals = 0 # useless to put It here since It will be defined with generateIndividuals method, but we want to keep a list of all the attributes of Population class
+        self.nbOfGenerations = 10000
 
 
     """
@@ -19,16 +22,23 @@ class Population:
     """
 
     def generateIndividuals(self):
-        return 0
-
-    def sortIndividualsByFitness(self):
-        return sorted(self.individuals, key = lambda x: x.fitness)
+        res = []
+        for i in range(self.nbOfIndividuals):
+            temp = []
+            for j in range(self.l):
+                temp += [rd.randint(0,2)]
+            res += [Individual(temp, self.initialList)]
+        self.individuals = res
 
     def evaluateFitness(self, individual):
         return np.abs(np.dot(self.initialList, individual.geneticCode))
 
-    def setFitness(self, individual):
+    def setFitnessForOneIndividual(self, individual):
         individual.fitness = self.evaluateFitness(individual)
+
+    def setFitnessForAllIndividuals(self, manyIndividuals):
+        for i in range(len(manyIndividuals)):
+            self.setFitnessForOneIndividual(manyIndividuals[i])
 
     def sumOfList(self, individual):
         return np.abs(np.dot(self.initialList, individual.geneticCode))
@@ -43,7 +53,7 @@ class Population:
     """
 
     def selectTwoIndividualsByTournament(self):
-        selected_individuals = rd.choices(self.individuals, k = floor(0.1*self.l))
+        selected_individuals = rd.choices(self.individuals, k = math.floor(0.1*self.l))
         length = len(selected_individuals)
         listOfFitness = np.array([selected_individuals[i].fitness for i in range(length)])
         weights = [100/(listOfFitness[i]*sum(1/listOfFitness)) for i in range(length)]
@@ -72,9 +82,11 @@ class Population:
             b.pop(0)
         return a + b
 
-    def crossoverOfSelectedIndividuals(self, individual1, individual2):
-        newIndividual1 = self.crossoverIndividuals(individual1, individual2, randint(0,self.l))
-        newIndividual2 = self.crossoverIndividuals(individual2, individual1, randint(0,self.l))
+    def crossoverOfSelectedIndividuals(self, individualsToCross):
+        individual1 = individualsToCross[0]
+        individual2 = individualsToCross[1]
+        newIndividual1 = self.crossoverIndividuals(individual1, individual2, rd.randint(0,self.l))
+        newIndividual2 = self.crossoverIndividuals(individual2, individual1, rd.randint(0,self.l))
         return [newIndividual1, newIndividual2]
 
 
@@ -85,7 +97,7 @@ class Population:
 
     def mutateIndividuals(self, individual):
         for i in range(self.l):
-            if random.randint(0,self.l) == 0:
+            if rd.randint(0,self.l) == 0:
                 individual.geneticCode[i] = -individual.geneticCode[i] + 1
 
 
@@ -94,15 +106,15 @@ class Population:
     Elitism
     """
 
-    def sortIndividualsByFitness(self, population):
-        return sorted(population.individuals, key = lambda x: x.fitness)
+    def sortIndividualsByFitness(self, manyIndividuals):
+        return sorted(manyIndividuals, key = lambda x: x.fitness)
 
     def createNewPopulationWithElitism(self, newIndividuals):
         pourcentageOfNewIndividuals = 0.9
         numberOfNewIndividuals = round(pourcentageOfNewIndividuals * self.l)
         numberOfOlfIndividuals = self.l - numberOfNewIndividuals
-        newIndividuals = self.sortIndividualByFitness(newPopulation)[:numberOfNewIndividuals]
-        oldIndividuals = self.sortIndividualByFitness(self.individuals)[:numberOfOldIndividuals]
+        newIndividuals = self.sortIndividualsByFitness(newIndividuals)[:numberOfNewIndividuals]
+        oldIndividuals = self.individuals[:numberOfOldIndividuals] # The individuals here will already be sorted
         self.individuals = self.sortIndividualsByFitness(oldIndividuals + newIndividuals)
 
 
@@ -111,9 +123,14 @@ class Population:
     UPDATE THE BEST ANSWER
     """
     def updateBestAnswer(self, answer):
+        """
+        By definition, the fitness is 0 when the sum of the sublist linked to an individual is 0. Since the fitness function does not necesarry consider the lenght of the list, we need to consider It there, only for the individuals with a sum of 0.
+        self.individuals here is sorted by fitness to make considering the lenght of each individuals faster.
+        """
         i = 0
-        while self.individuals[i].sumOfList() == 0:
-  #          if
+        while self.individuals[i].fitness == 0:
+            if self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer):
+                answer = self.individuals[i]
             i += 1
 
 
@@ -121,9 +138,20 @@ class Population:
     SUM UP
     """
     def main(self):
-        """
-        STEP 1 TO BE DONE
-        """
+        self.generateIndividuals()
+        self.setFitnessForAllIndividuals(self.individuals)
+        self.individuals = self.sortIndividualsByFitness(self.individuals)
+        answer = self.individuals[0]
+        for i in range(self.nbOfGenerations):
+            tournamentSelectedIndividuals = []
+            for j in range(self.nbOfIndividuals // 2):
+                tournamentSelectedIndividuals += self.crossoverOfSelectedIndividuals(self.selectTwoIndividualsByTournament())
+            for individual in tournamentSelectedIndividuals:
+                mutateIndividuals(individual)
+            self.setFitnessForAllIndividuals(tournamentSelectedIndividuals)
+            self.createNewPopulationWithElitism(tournamentSelectedIndividuals)
+            self.updateBestAnswer(answer)
+        return answer
 
 
 

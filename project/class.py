@@ -45,7 +45,7 @@ class Population:
 
     def lenOfIndividual(self, individual):
         return np.dot(np.ones(self.l), individual.geneticCode)
-    
+
 
 
     """
@@ -77,11 +77,7 @@ class Population:
     def crossoverIndividuals(self, firstIndividual, otherIndividual, crossoverPoint):
         a = firstIndividual.geneticCode
         b = otherIndividual.geneticCode
-        for i in range(crossoverPoint,self.l):
-            a.pop(-1)
-        for i in range(crossoverPoint):
-            b.pop(0)
-        return a + b
+        return a[:crossoverPoint] + b[crossoverPoint:]
 
 
     def crossoverOfSelectedIndividuals(self, individualsToCross):

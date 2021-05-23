@@ -161,6 +161,8 @@ class Population:
             answer = self.updateBestAnswer(answer)
             fitnessList += [answer.fitness]
             lenList += [self.lenOfIndividual(answer)]
+            print(self.lenOfIndividual(answer))
+            print(self.sumOfList(answer))
         fig, ax1 = plt.subplots()
         ax1.plot(abs,fitnessList, color='tab:red')
         ax2 = ax1.twinx()

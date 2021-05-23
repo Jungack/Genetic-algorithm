@@ -254,11 +254,34 @@ class Population:
             fitness_list += [answer.fitness]
             actual_fitness_list += [self.individuals[0].fitness]
             len_list += [self.len_of_individual(answer)]
-            print("yo")
+            
+            
+            
+        """
+        Plot this way if you have chosen not to take elitism
+        It will plot the fitness of the best member of each generation as well
+        as the overall best fitness
+        """
+        """
         plt.plot(abs,fitness_list, color='tab:red')
         plt.plot(abs,actual_fitness_list, color='tab:blue')
         plt.show()
         return answer
+        """
+        
+        
+        
+        """
+        This plot works in any case
+        It will plot the length of the best solution as well as its fitness
+        """
+        """
+        fig, ax1 = plt.subplots()
+        ax1.plot(abs,fitness_list, color='tab:red')
+        ax2 = ax1.twinx()
+        ax2.plot(abs,len_list, color='tab:blue')
+        plt.show()
+        """
 
 
 

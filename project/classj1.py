@@ -15,7 +15,7 @@ class Population:
         self.nbOfIndividuals = 100
         self.l = len(initialList)
         self.individuals = 0 # useless to put It here since It will be defined with generateIndividuals method, but we want to keep a list of all the attributes of Population class
-        self.nbOfGenerations = 50
+        self.nbOfGenerations = 500
 
 
     """

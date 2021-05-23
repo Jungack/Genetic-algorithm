@@ -67,8 +67,6 @@ class Population:
     STEP 1:
     Tournament
     """
-
-    def selectTwoIndividualsByTournament(self):
         selected_individuals = rd.sample(self.individuals, 20)
         finalTwoIndividuals = []
         for step in range(2):

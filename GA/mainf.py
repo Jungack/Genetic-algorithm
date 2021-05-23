@@ -3,7 +3,7 @@
 import numpy as np
 import random as rd
 import time
-import unittest
+import matplotlib.pyplot as plt
 
 class Population:
     def __init__(self, initialList):
@@ -12,10 +12,10 @@ class Population:
         initialList is the list of relative numbers given at the beginning
         """
         self.initialList = initialList
-        self.nbOfIndividuals = 200
+        self.nbOfIndividuals = 100
         self.l = len(initialList)
         self.individuals = 0 # useless to put It here since It will be defined with generateIndividuals method, but we want to keep a list of all the attributes of Population class
-        self.nbOfGenerations = 15000
+        self.nbOfGenerations = 500
 
     """
     BASIC METHODS
@@ -31,8 +31,7 @@ class Population:
         self.individuals = res
 
     def evaluateFitness(self, individual):
-        return np.abs(np.dot(self.initialList, individual.geneticCode)) + (1-self.lenOfIndividual(individual)/self.l)
-
+        return np.abs(np.dot(self.initialList, individual.geneticCode)) 
     def setFitnessForOneIndividual(self, individual):
         individual.fitness = self.evaluateFitness(individual)
 
@@ -102,7 +101,7 @@ class Population:
 
     def mutateIndividuals(self, individual):
         for i in range(self.l):
-            if rd.randint(0,self.l - 1) < 1:
+            if rd.randint(0,self.l//2) ==0:
                 individual.geneticCode[i] = -individual.geneticCode[i] + 1
 
 
@@ -148,6 +147,9 @@ class Population:
         self.setFitnessForAllIndividuals(self.individuals)
         self.individuals = self.sortIndividualsByFitness(self.individuals)
         answer = self.individuals[0]
+        fitnessList = [answer.fitness]
+        lenList = [self.lenOfIndividual(answer)]
+        abs = [i for i in range(self.nbOfGenerations + 1)]
         for i in range(self.nbOfGenerations):
             tournamentSelectedIndividuals = []
             for j in range(self.nbOfIndividuals // 2):
@@ -158,10 +160,17 @@ class Population:
             self.createNewPopulationWithElitism(tournamentSelectedIndividuals)
             self.updateBestAnswer(answer)
             answer = self.updateBestAnswer(answer)
+            fitnessList += [answer.fitness]
+            lenList += [self.lenOfIndividual(answer)]
             print(self.lenOfIndividual(answer))
             print(self.sumOfList(answer))
+        fig, ax1 = plt.subplots()
+        ax1.plot(abs,fitnessList, color='tab:red')
+        ax2 = ax1.twinx()
+        ax2.plot(abs,lenList, color='tab:blue')
+        plt.show()
         tps2 = time.clock()
-        print("The program ran during"+(tps2-tps1)+"seconds.")
+        print("The program ran during ",(tps2-tps1)," seconds.")
         return answer
 
 

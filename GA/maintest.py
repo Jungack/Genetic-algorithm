@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+"""
+Functions to be tested need to be uncommented in the main script
+"""
 
 import unittest
 from main import Population

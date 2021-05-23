@@ -3,6 +3,7 @@
 import numpy as np
 import random as rd
 import time
+import unittest
 
 class Population:
     def __init__(self, initialList):
@@ -44,6 +45,7 @@ class Population:
 
     def lenOfIndividual(self, individual):
         return np.dot(np.ones(self.l), individual.geneticCode)
+    
 
     """
     def evaluateFitness(self, individual):

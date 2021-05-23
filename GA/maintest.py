@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat May 22 14:19:35 2021
-
-@author: Florian
 
 
+import unittest
+from mainf import Population
+from mainf import Individual
 
+class KnownValues(unittest.TestCase):
+    
+    def testSumOfList(self):
+        randomList = Population([-12, 0, 0, 1, 13, 2, 3])
+        randomIndividual1 = Individual([1, 0, 1, 1, 1, 0, 0], randomList.initialList)
+        randomIndividual2 = Individual([1, 1, 1, 0, 0, 0, 1], randomList.initialList)
+        randomIndividual3 = Individual([0, 0, 0, 0, 0, 0, 0], randomList.initialList)
+        self.assertEqual(randomList.sumOfList(randomIndividual1), 2)
+        self.assertEqual(randomList.sumOfList(randomIndividual2), 9)
+        self.assertEqual(randomList.sumOfList(randomIndividual3), 0)
+        
+    def 
+        
+        
 
-"""
-
-import numpy as np
-l = [0, 1, 2, 3]
-l += np.ones(len(l))/100000
-print(l)
-weights = [100/(l[i]*sum(1/l)) for i in range (len(l))]
-print(weights)
+if __name__ == '__main__':
+    unittest.main()

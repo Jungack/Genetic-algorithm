@@ -156,8 +156,10 @@ class Population:
             self.createNewPopulationWithElitism(tournamentSelectedIndividuals)
             self.updateBestAnswer(answer)
             answer = self.updateBestAnswer(answer)
-            self.plotFitness(answer)
+            print(self.lenOfIndividual(answer))
+            print(self.sumOfList(answer))
         tps2 = time.clock()
+        print("The program ran during"+(tps2-tps1)+"seconds.")
         return answer
 
 

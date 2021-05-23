@@ -135,7 +135,7 @@ class Population:
         """
         i = 0
         while (self.individuals[i].fitness <= answer.fitness) & (i < self.nbOfIndividuals):
-            if self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer):
+            if (answer.fitness != 0) or (answer.fitness == 0 and self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer)):
                 answer = self.individuals[i]
             i += 1
         return answer
@@ -163,10 +163,8 @@ class Population:
             answer = self.updateBestAnswer(answer)
             fitnessList += [answer.fitness]
             actualFitnessList += [self.individuals[0].fitness]
-        fig, ax1 = plt.subplots()
-        ax1.plot(abs,fitnessList, color='tab:red')
-        ax2 = ax1.twinx()
-        ax2.plot(abs,actualFitnessList, color='tab:blue')
+        plt.plot(abs,fitnessList, color='tab:red')
+        plt.plot(abs,actualFitnessList, color='tab:blue')
         plt.show()
         return answer
 

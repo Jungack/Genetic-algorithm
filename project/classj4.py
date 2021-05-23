@@ -135,11 +135,10 @@ class Population:
         """
         i = 0
         while (self.individuals[i].fitness <= answer.fitness) & (i < self.nbOfIndividuals):
-            if self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer):
+            if (answer.fitness != 0) or (answer.fitness == 0 and self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer)):
                 answer = self.individuals[i]
             i += 1
         return answer
-
 
     """
     SUM UP

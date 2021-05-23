@@ -1,5 +1,17 @@
 # -*- coding: utf-8 -*-
 
+
+"""
+/!\ WARNING /!\
+This script requires you to uncomment certain sections
+You will be advised when to do so in the related sections and how
+
+To launch the script you need to define the list you want to test,
+enter it as a Population (with Population(list)) and launch it using the main
+(Population(list).main())
+"""
+
+
 import numpy as np
 import random as rd
 import matplotlib.pyplot as plt
@@ -14,7 +26,7 @@ class Population:
         self.NB_OF_INDIVIDUALS = 100
         self.L = len(INITIAL_LIST)
         self.individuals = 0 # useless to put It here since It will be defined with generateIndividuals method, but we want to keep a list of all the attributes of Population class
-        self.NB_OF_GENERATIONS = 50
+        self.NB_OF_GENERATIONS = 500
 
 
     """
@@ -62,15 +74,17 @@ class Population:
         - second fitness function comes with second update_answer in section 5
     """
     
-    
+    """
     def evaluate_fitness(self, individual):
         return np.abs(np.dot(self.INITIAL_LIST, individual.genetic_code))
-    
-    
     """
+    
+    
+    """"
     def evaluate_fitness(self, individual):
         return np.abs(np.dot(self.INITIAL_LIST, individual.genetic_code)) + (1 - self.len_of_individual(individual)/self.L)
     """
+    
 
 
 
@@ -86,15 +100,17 @@ class Population:
         Option 1 : random selection
         """
     
-    
+    """
     def select_two_individuals(self):
         return [self.individuals[rd.randint(0,self.NB_OF_INDIVIDUALS - 1)] for i in range(2)]
+    """
+    
     
     
     """
         Option 2 : selection with tournament
         """
-    """ 
+    """
     def select_two_individuals(self):
         selected_individuals = rd.sample(self.individuals, round(0.1*self.NB_OF_INDIVIDUALS))
         final_two_individuals = []
@@ -111,6 +127,8 @@ class Population:
             del selected_individuals[index]
         return final_two_individuals
     """
+    
+    
     
 
 
@@ -154,14 +172,15 @@ class Population:
     Uncomment the wanted method
     """
 
-
+    
     def sort_individuals_by_fitness(self, many_individuals):
         return sorted(many_individuals, key = lambda x: x.fitness)
+    
     
     """
         Option 1 : without elitism
         """
-    
+    """
     def create_new_population(self, new_individuals):
         PERCENTAGE_OF_NEW_INDIVIDUALS = 0.8
         number_of_new_individuals = round(PERCENTAGE_OF_NEW_INDIVIDUALS * self.NB_OF_INDIVIDUALS)
@@ -169,6 +188,7 @@ class Population:
         new_individuals = self.sort_individuals_by_fitness(new_individuals)[:number_of_new_individuals]
         extras = self.generate_specific_number_of_individuals(number_of_extras)
         self.individuals = self.sort_individuals_by_fitness(new_individuals + extras)
+    """
     
     
     
@@ -188,6 +208,7 @@ class Population:
         old_individuals = self.individuals[:number_of_old_individuals]
         self.individuals = self.sort_individuals_by_fitness(old_individuals + new_individuals + extras)
     """
+    
     
 
 
@@ -211,7 +232,7 @@ class Population:
     We define a best possible answer as the individual with the best fitness first, and then sum nearer to 0 and finally the longest lenght.
     """
     
-    
+    """
     def update_answer(self, answer):
         i = 0
         while (self.individuals[i].fitness <= answer.fitness) & (i < self.NB_OF_INDIVIDUALS):
@@ -219,7 +240,7 @@ class Population:
                 answer = self.individuals[i]
             i += 1
         return answer
-    
+    """
     
     """
     def update_answer(self, answer):
@@ -227,6 +248,7 @@ class Population:
             answer = self.individuals[0]
         return answer
     """
+    
     
 
 
@@ -254,11 +276,12 @@ class Population:
             fitness_list += [answer.fitness]
             actual_fitness_list += [self.individuals[0].fitness]
             len_list += [self.len_of_individual(answer)]
+        print("The ultimate subset obtained with this configuration has a sum of ", self.sum_of_list(answer), " and a length of ", self.len_of_individual(answer),".")
             
             
             
         """
-        Plot this way if you have chosen not to take elitism
+        Plot this way only if you have chosen not to take elitism
         It will plot the fitness of the best member of each generation as well
         as the overall best fitness
         """
@@ -271,23 +294,23 @@ class Population:
         plt.show()
         return answer
         """
-        
+         
         
         
         """
         This plot works in any case
         It will plot the length of the best solution as well as its fitness
         """
-        """
+    
         fig, ax1 = plt.subplots()
-        ax1.set_ylabel('Fitness', color = 'tab:red')
+        ax1.set_ylabel('Fitness of the best individual', color = 'tab:red')
         ax1.plot(abs,fitness_list, color='tab:red')
         ax2 = ax1.twinx()
-        ax2.set_ylabel('Length of the individual', color = 'tab:blue')
+        ax2.set_ylabel('Length of the best individual', color = 'tab:blue')
         ax2.plot(abs,len_list, color='tab:blue')
         plt.show()
-        """
-
+        return answer
+    
 
 
 class Individual(Population):

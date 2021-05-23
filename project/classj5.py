@@ -140,13 +140,13 @@ class Population:
     """
     def updateBestAnswer(self, answer):
         """
-        By definition, the fitness is 0 when the sum of the sublist linked to an individual is 0. Since the fitness function does not necesarry consider the lenght of the list, we need to consider It there, only for the individuals with a sum of 0.
+        Since the fitness function does not necesarry consider the lenght of the list, we need to consider It there.
         self.individuals here is sorted by fitness to make considering the lenght of each individuals faster.
-        We define a best possible answer as the individual with the best fitness AND the longest lenght.
+        We define a best possible answer as the individual with the best fitness first, and then sum nearer to 0 and finally the longest lenght.
         """
         i = 0
         while (self.individuals[i].fitness <= answer.fitness) & (i < self.nbOfIndividuals):
-            if (answer.fitness != 0) or (answer.fitness == 0 and self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer)):
+            if (self.sumOfList(answer) != 0) or (self.sumOfList(answer) == 0 and self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer)):
                 answer = self.individuals[i]
             i += 1
         return answer

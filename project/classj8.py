@@ -1,7 +1,7 @@
 """
 Changing the createNewPopulationWithElitism method : no old generation, only new + migrants
-Changing the tournament procedure method : make It totally random
 Plotting best global fitness and best fitness at generation i
+Old style updateBestAnswer
 """
 
 # -*- coding: utf-8 -*-
@@ -71,8 +71,20 @@ class Population:
     """
 
     def selectTwoIndividualsByTournament(self):
-        return [self.individuals[rd.randint(0,self.nbOfIndividuals - 1)] for i in range(2)]
-
+        selected_individuals = rd.sample(self.individuals, 20)
+        finalTwoIndividuals = []
+        for step in range(2):
+            length = len(selected_individuals)
+            listOfFitness = [selected_individuals[i].fitness for i in range(length)] + np.ones(length)/100000
+            weights = [100/(listOfFitness[i]*sum(1/listOfFitness)) for i in range(length)]
+            index = 0
+            pickANumber = rd.random()
+            while ((pickANumber - weights[index]/100) > 0):
+                pickANumber -= weights[index]/100
+                index+=1
+            finalTwoIndividuals += [selected_individuals[index]]
+            del selected_individuals[index]
+        return finalTwoIndividuals
 
 
     """
@@ -135,7 +147,7 @@ class Population:
         """
         i = 0
         while (self.individuals[i].fitness <= answer.fitness) & (i < self.nbOfIndividuals):
-            if (self.sumOfList(answer) != 0) or (self.sumOfList(answer) == 0 and self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer)):
+            if (answer.fitness != 0) or (answer.fitness == 0 and self.lenOfIndividual(self.individuals[i]) >= self.lenOfIndividual(answer)):
                 answer = self.individuals[i]
             i += 1
         return answer

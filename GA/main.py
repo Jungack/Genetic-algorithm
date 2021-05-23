@@ -2,7 +2,7 @@
 
 import numpy as np
 import random as rd
-import math
+import time
 
 class Population:
     def __init__(self, initialList):
@@ -11,12 +11,10 @@ class Population:
         initialList is the list of relative numbers given at the beginning
         """
         self.initialList = initialList
-        self.nbOfIndividuals = 100
+        self.nbOfIndividuals = 200
         self.l = len(initialList)
         self.individuals = 0 # useless to put It here since It will be defined with generateIndividuals method, but we want to keep a list of all the attributes of Population class
-        self.nbOfGenerations = 5000
-
-
+        self.nbOfGenerations = 15000
 
     """
     BASIC METHODS
@@ -32,7 +30,7 @@ class Population:
         self.individuals = res
 
     def evaluateFitness(self, individual):
-        return np.abs(np.dot(self.initialList, individual.geneticCode)) +10*(1-self.lenOfIndividual(individual)/self.l)
+        return np.abs(np.dot(self.initialList, individual.geneticCode)) + (1-self.lenOfIndividual(individual)/self.l)
 
     def setFitnessForOneIndividual(self, individual):
         individual.fitness = self.evaluateFitness(individual)
@@ -52,9 +50,6 @@ class Population:
         return np.abs(np.dot(self.initialList, individual.geneticCode))
     """
 
-    def evaluateFitness(self, individual):
-        return np.abs(np.dot(self.initialList, individual.geneticCode)) / self.lenOfIndividual(individual)
-
 
 
     """
@@ -63,7 +58,7 @@ class Population:
     """
 
     def selectTwoIndividualsByTournament(self):
-        selected_individuals = rd.sample(self.individuals, 10)
+        selected_individuals = rd.sample(self.individuals, 20)
         finalTwoIndividuals = []
         for step in range(2):
             length = len(selected_individuals)
@@ -105,7 +100,7 @@ class Population:
 
     def mutateIndividuals(self, individual):
         for i in range(self.l):
-            if rd.randint(0,self.l - 1) == 0:
+            if rd.randint(0,self.l - 1) < 1:
                 individual.geneticCode[i] = -individual.geneticCode[i] + 1
 
 
@@ -139,12 +134,14 @@ class Population:
         if self.individuals[0].fitness < answer.fitness:
             answer = self.individuals[0]
         return answer
+        
 
 
     """
     SUM UP
     """
     def main(self):
+        tps1 = time.clock()
         self.generateIndividuals()
         self.setFitnessForAllIndividuals(self.individuals)
         self.individuals = self.sortIndividualsByFitness(self.individuals)
@@ -158,10 +155,9 @@ class Population:
             self.setFitnessForAllIndividuals(tournamentSelectedIndividuals)
             self.createNewPopulationWithElitism(tournamentSelectedIndividuals)
             self.updateBestAnswer(answer)
-            print(self.sumOfList(answer))
-            print(self.lenOfIndividual((answer)))
             answer = self.updateBestAnswer(answer)
-        print(answer.geneticCode)
+            self.plotFitness(answer)
+        tps2 = time.clock()
         return answer
 
 
@@ -179,3 +175,4 @@ class Individual(Population):
         self.geneticCode = geneticCode
         Population.initialList = initialList
         self.fitness = 0
+        

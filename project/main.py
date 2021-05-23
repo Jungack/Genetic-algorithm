@@ -263,8 +263,11 @@ class Population:
         as the overall best fitness
         """
         """
-        plt.plot(abs,fitness_list, color='tab:red')
-        plt.plot(abs,actual_fitness_list, color='tab:blue')
+        plt.plot(abs,fitness_list, color='tab:red', label = 'Best global fitness')
+        plt.plot(abs,actual_fitness_list, color='tab:blue', label = 'Best current fitness')
+        plt.xlabel("Generation")
+        plt.ylabel("Fitness")
+        plt.legend()
         plt.show()
         return answer
         """
@@ -277,8 +280,10 @@ class Population:
         """
         """
         fig, ax1 = plt.subplots()
+        ax1.set_ylabel('Fitness', color = 'tab:red')
         ax1.plot(abs,fitness_list, color='tab:red')
         ax2 = ax1.twinx()
+        ax2.set_ylabel('Length of the individual', color = 'tab:blue')
         ax2.plot(abs,len_list, color='tab:blue')
         plt.show()
         """

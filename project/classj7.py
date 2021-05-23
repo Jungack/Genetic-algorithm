@@ -14,7 +14,11 @@ class Population:
         self.NB_OF_INDIVIDUALS = 100
         self.L = len(INITIAL_LIST)
         self.individuals = 0 # useless to put It here since It will be defined with generateIndividuals method, but we want to keep a list of all the attributes of Population class
+<<<<<<< HEAD
         self.NB_OF_GENERATIONS = 50
+=======
+        self.nbOfGenerations = 50
+>>>>>>> 55ee7514ced759d2faf5da04c86aae83717e27f6
 
 
     """
